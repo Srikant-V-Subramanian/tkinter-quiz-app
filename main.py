@@ -200,6 +200,15 @@ d = {
     50: ["What is the chemical symbol for copper?", ["Cu", "C", "Co", "Ca"], 0],
 }
 
+
+for i in range(1, len(d) + 1):
+    l = d[i][1]
+    correct_answer = d[i][1][d[i][2]]
+    random.shuffle(l)
+    d[i][1] = l
+    d[i][2] = d[i][1].index(correct_answer)
+
+
 """
 
 
@@ -240,6 +249,7 @@ if n > 50:
     print("Enter a number less than 50.")
     n = int(input("\nEnter the number of question you'd want to attend : "))
 
+print()
 
 count = 1
 score = 0
@@ -275,13 +285,14 @@ def select_option(option):
         print("You got it correct.")
     else:
         print("You got it wrong.")
-    print(selected_option.get(), score)
+    print("You selected : ", selected_option.get())
+    print("Correct Option : ", d[x][1][d[x][2]])
+    print("Current Score : ", score)
     print()
 
     del d[x]
 
     if count > n:
-        print(d)
         message = (
             "THE TEST IS OVER"
             + "\nSCORE: "
