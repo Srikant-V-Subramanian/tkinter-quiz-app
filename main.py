@@ -283,8 +283,12 @@ def select_option(option):
     if d[x][1][d[x][2]] == selected_option.get():
         score += 5
         print("You got it correct.")
+        msg = messagebox.showinfo(message="You got it correct!", title="You got it correct!")
     else:
+        msg = messagebox.showerror(message="You got it wrong!", title="You got it wrong!")
         print("You got it wrong.")
+
+    
     print("You selected : ", selected_option.get())
     print("Correct Option : ", d[x][1][d[x][2]])
     print("Current Score : ", score)
@@ -337,7 +341,7 @@ question_no_label = canvas.create_text(
 
 question_text = "Which one of the following is the capital of India?"
 question_label = canvas.create_text(
-    450, 250, text=question_text, font=("Roboto", 20), fill="white"
+    450, 225, text=question_text, font=("Pacifico", 20), fill="white"
 )
 
 options = ["Chennai", "Mumbai", "Kolkata", "Delhi"]
@@ -351,7 +355,7 @@ option1 = Button(
     fg="#ffffff",
     activebackground="#0066FF",
     activeforeground="#ffffff",
-    font=("Roboto", 15),
+    font=("IBM Plex Mono", 12),
     anchor="se",
     command=lambda: select_option(options[0]),
 )
@@ -364,7 +368,7 @@ option2 = Button(
     fg="#ffffff",
     activebackground="#0066FF",
     activeforeground="#ffffff",
-    font=("Roboto", 15),
+    font=("IBM Plex Mono", 12),
     anchor="se",
     justify="center",
     command=lambda: select_option(options[1]),
@@ -378,7 +382,7 @@ option3 = Button(
     fg="#ffffff",
     activebackground="#0066FF",
     activeforeground="#ffffff",
-    font=("Roboto", 15),
+    font=("IBM Plex Mono", 12),
     anchor="se",
     justify="center",
     command=lambda: select_option(options[2]),
@@ -392,13 +396,15 @@ option4 = Button(
     fg="#ffffff",
     activebackground="#0066FF",
     activeforeground="#ffffff",
-    font=("Roboto", 15),
+    font=("IBM Plex Mono", 12),
     anchor="se",
     command=lambda: select_option(options[3]),
 )
 option4.place(anchor="center", relx=0.5, rely=0.8)
 
 change_question()
+
+arr = [option1, option2, option3, option4]
 
 
 window.config(
