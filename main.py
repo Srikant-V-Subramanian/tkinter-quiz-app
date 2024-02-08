@@ -1,7 +1,11 @@
+# TRIVIA QUIZ
+
+
 import random
 from tkinter import *
 from PIL import Image, ImageTk
 from tkinter import messagebox
+import subprocess, os
 
 d = {
     1: [
@@ -243,7 +247,7 @@ print("PERCENTAGE : ", int(((score // 5) / n) * 100), "%")
 
 """
 
-n = int(input("Enter the number of question you'd want to attend : "))
+n = int(input("\nEnter the number of question you'd want to attend : "))
 
 if n > 50:
     print("Enter a number less than 50.")
@@ -283,12 +287,14 @@ def select_option(option):
     if d[x][1][d[x][2]] == selected_option.get():
         score += 5
         print("You got it correct.")
-        msg = messagebox.showinfo(message="You got it correct!", title="You got it correct!")
+        msg = messagebox.showinfo(
+            message="You got it correct!", title="You got it correct!"
+        )
     else:
-        msg = messagebox.showerror(message="You got it wrong!", title="You got it wrong!")
+        k = "You got it wrong!\nThe Correct answer was " + d[x][1][d[x][2]]
+        msg = messagebox.showerror(message=k, title="You got it wrong!")
         print("You got it wrong.")
 
-    
     print("You selected : ", selected_option.get())
     print("Correct Option : ", d[x][1][d[x][2]])
     print("Current Score : ", score)
@@ -310,7 +316,20 @@ def select_option(option):
             + "%"
         )
         x = messagebox.showinfo(message=message, title="TEST RESULTS")
+
+        if "TRIVIA_USER_SCORE" in dict(os.environ):
+            os.environ["TRIVIA_USER_SCORE"] = str(
+                int(os.environ["TRIVIA_USER_SCORE"]) + score
+            )
+            os.environ["TRIVIA_TOTAL_QUES"] = str(
+                int(os.environ["TRIVIA_TOTAL_QUES"]) + n
+            )
+        else:
+            os.environ["TRIVIA_USER_SCORE"] = str(score)
+            os.environ["TRIVIA_TOTAL_QUES"] = str(n)
+
         window.destroy()
+        subprocess.call(["python", "menu.py"])
     else:
         change_question()
 
@@ -355,7 +374,7 @@ option1 = Button(
     fg="#ffffff",
     activebackground="#0066FF",
     activeforeground="#ffffff",
-    font=("IBM Plex Mono", 12),
+    font=("Poppins", 16),
     anchor="se",
     command=lambda: select_option(options[0]),
 )
@@ -368,7 +387,7 @@ option2 = Button(
     fg="#ffffff",
     activebackground="#0066FF",
     activeforeground="#ffffff",
-    font=("IBM Plex Mono", 12),
+    font=("Poppins", 16),
     anchor="se",
     justify="center",
     command=lambda: select_option(options[1]),
@@ -382,7 +401,7 @@ option3 = Button(
     fg="#ffffff",
     activebackground="#0066FF",
     activeforeground="#ffffff",
-    font=("IBM Plex Mono", 12),
+    font=("Poppins", 16),
     anchor="se",
     justify="center",
     command=lambda: select_option(options[2]),
@@ -396,13 +415,14 @@ option4 = Button(
     fg="#ffffff",
     activebackground="#0066FF",
     activeforeground="#ffffff",
-    font=("IBM Plex Mono", 12),
+    font=("Poppins", 16),
     anchor="se",
     command=lambda: select_option(options[3]),
 )
 option4.place(anchor="center", relx=0.5, rely=0.8)
 
 change_question()
+
 
 arr = [option1, option2, option3, option4]
 
@@ -412,5 +432,7 @@ window.config(
     width=900,
 )
 
+
+window.title("TRIVIA QUIZ!")
 window.resizable(0, 0)
 window.mainloop()
