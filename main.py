@@ -5,6 +5,7 @@ import random
 from tkinter import *
 from PIL import Image, ImageTk
 from tkinter import messagebox
+from tkinter import simpledialog
 import subprocess, os
 
 d = {
@@ -247,11 +248,6 @@ print("PERCENTAGE : ", int(((score // 5) / n) * 100), "%")
 
 """
 
-n = int(input("\nEnter the number of question you'd want to attend : "))
-
-if n > 50:
-    print("Enter a number less than 50.")
-    n = int(input("\nEnter the number of question you'd want to attend : "))
 
 print()
 
@@ -335,6 +331,18 @@ def select_option(option):
 
 
 window = Tk()
+
+n = simpledialog.askinteger(
+    "Enter the number of questions!",
+    "Enter the number of question (less than 50) you'd want to attend : ",
+)
+
+while n > 50:
+    print("Enter a number less than 50.")
+    n = simpledialog.askinteger(
+        "INVALID!",
+        "Enter the number of questions (less than 50)  you'd want to attend : ",
+    )
 
 
 background_image = ImageTk.PhotoImage(Image.open("./wave-haikei.png"))

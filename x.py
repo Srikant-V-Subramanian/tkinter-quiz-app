@@ -14,35 +14,6 @@ comp_score = 0
 window = Tk()
 
 
-def exit_game():
-    global user_score, comp_score
-    if "RPS_USER_SCORE" in dict(os.environ):
-        os.environ["RPS_USER_SCORE"] = str(
-            int(os.environ["RPS_USER_SCORE"]) + user_score
-        )
-        os.environ["RPS_COMP_SCORE"] = str(
-            int(os.environ["RPS_COMP_SCORE"]) + comp_score
-        )
-    else:
-
-        os.environ["RPS_USER_SCORE"] = str(user_score)
-        os.environ["RPS_COMP_SCORE"] = str(comp_score)
-
-    msg = (
-        "RESULTS\nTotal no. of rounds : "
-        + str(user_score + comp_score)
-        + "\nYour Score : "
-        + str(user_score)
-        + " rounds "
-        + "\nComputer Score : "
-        + str(comp_score)
-        + " rounds "
-    )
-    messagebox.showinfo(message=msg, title="SCORE")
-    window.destroy()
-    subprocess.call(["python", "menu.py"])
-
-
 def user_selection(option):
     global user_score, comp_score
     comp_choice.set(value=options[random.randint(0, 2)])
@@ -130,6 +101,35 @@ def user_selection(option):
     time.sleep(1)
     canvas.itemconfig(user_image, image=init)
     canvas.itemconfig(comp_image, image=init)
+
+
+def exit_game():
+    global user_score, comp_score
+    if "RPS_USER_SCORE" in dict(os.environ):
+        os.environ["RPS_USER_SCORE"] = str(
+            int(os.environ["RPS_USER_SCORE"]) + user_score
+        )
+        os.environ["RPS_COMP_SCORE"] = str(
+            int(os.environ["RPS_COMP_SCORE"]) + comp_score
+        )
+    else:
+
+        os.environ["RPS_USER_SCORE"] = str(user_score)
+        os.environ["RPS_COMP_SCORE"] = str(comp_score)
+
+    msg = (
+        "RESULTS\nTotal no. of rounds : "
+        + str(user_score + comp_score)
+        + "\nYour Score : "
+        + str(user_score)
+        + " rounds "
+        + "\nComputer Score : "
+        + str(comp_score)
+        + " rounds "
+    )
+    messagebox.showinfo(message=msg, title="SCORE")
+    window.destroy()
+    subprocess.call(["python", "menu.py"])
 
 
 background_image = ImageTk.PhotoImage(Image.open("./stacked-peaks-haikei.png"))
